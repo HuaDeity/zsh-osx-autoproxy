@@ -19,7 +19,9 @@ set_proxy_env() {
     typeset proxy_enabled=$(echo "$proxy_info" | grep -Eo '^Enabled: .*' | sed -E 's/^Enabled: //')
 
     if [ "$proxy_enabled" = "Yes" ]; then
-        if [ "$proxy_type" = "socks" ]; then
+        if [ "$proxy_type" = "git" ]; then
+            git config --global "$env_var_name" "http://$proxy_server:$proxy_port"
+        elif [ "$proxy_type" = "socks" ]; then
             export "$env_var_name=socks5://$proxy_server:$proxy_port"
         else
             export "$env_var_name=http://$proxy_server:$proxy_port"
@@ -40,6 +42,8 @@ proxy() {
     set_proxy_env "http" "http_proxy"
     set_proxy_env "https" "https_proxy"
     set_proxy_env "socks" "all_proxy"
+    set_proxy_env "git" "http.proxy"
+    set_proxy_env "git" "https.proxy"
 }
 
 noproxy() {
@@ -47,6 +51,8 @@ noproxy() {
     unset https_proxy
     unset all_proxy
     unset no_proxy
+    git config --global --unset http.proxy
+    git config --global --unset https.proxy
 }
 
 proxy
