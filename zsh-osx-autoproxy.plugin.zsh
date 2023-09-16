@@ -35,7 +35,11 @@ set_proxy_env() {
 
 set_no_proxy(){
     typeset bypass_domains=$(networksetup -getproxybypassdomains "$network_service" | tr '\n' ',')
-    export no_proxy="${bypass_domains%,}"
+    if [[ "$bypass_domains" == *"There aren't any bypass domains"* ]]; then
+        unset no_proxy
+    else
+        export no_proxy="${bypass_domains%,}"
+    fi
 }
 
 # 获取当前活动网络服务
