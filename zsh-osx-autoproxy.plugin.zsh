@@ -26,12 +26,16 @@ set_proxy_env() {
         else
             export "$env_var_name=http://$proxy_server:$proxy_port"
         fi
+    elif [ "$proxy_type" = "git" ]; then
+        git config --global --unset "$env_var_name"
+    else
+        unset "$env_var_name"
     fi
+}
 
-    if [ "$proxy_type" = "http" ]; then
-        typeset bypass_domains=$(networksetup -getproxybypassdomains "$network_service" | tr '\n' ',')
-        export no_proxy="${bypass_domains%,}"
-    fi
+set_no_proxy(){
+    typeset bypass_domains=$(networksetup -getproxybypassdomains "$network_service" | tr '\n' ',')
+    export no_proxy="${bypass_domains%,}"
 }
 
 # 获取当前活动网络服务
@@ -42,6 +46,7 @@ proxy() {
     set_proxy_env "http" "http_proxy"
     set_proxy_env "https" "https_proxy"
     set_proxy_env "socks" "all_proxy"
+    set_no_proxy
     set_proxy_env "git" "http.proxy"
     set_proxy_env "git" "https.proxy"
 }
