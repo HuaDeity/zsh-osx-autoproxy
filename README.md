@@ -1,4 +1,6 @@
-# zsh-osx-autoproxy
+# zsh-osx-autoproxy [ARCHIVED]
+
+> **⚠️ ARCHIVED NOTICE: This project is no longer maintained. Please use [huadeity/zsh-proxy](https://github.com/huadeity/zsh-proxy) which is the successor of this plugin with improved features and cross-platform support.**
 
 Auto Set Proxy for macOS zsh
 

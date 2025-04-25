@@ -1,5 +1,11 @@
 #!/bin/zsh
 
+# =================================================================
+# ⚠️ ARCHIVED NOTICE: This project is no longer maintained. 
+# Please use https://github.com/huadeity/zsh-proxy which is the successor
+# of this plugin with improved features and cross-platform support.
+# =================================================================
+
 # 定义设置代理环境变量的函数
 set_proxy_env() {
     typeset proxy_type=$1
